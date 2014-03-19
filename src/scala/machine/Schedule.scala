@@ -5,21 +5,18 @@ package scala.machine
 
 import java.util.Random
 
-class Schedule(intervals: Int, length: Double) {
+class Schedule(val intervals: Int) {
   require(intervals > 0)
-  require(length > 0)
 
   val sched: Array[Int] = Array.fill(intervals){0}
 
-  def randomize(): Schedule = {
-    val newSched = new Schedule(intervals, length)
-    for(i <- 0 until intervals) newSched.sched(i) = Schedule.rand.nextInt(3)
-    newSched
-  }
+  def apply(i: Int) = sched(i-1)
+
+  def randomize() {for(i <- 0 until intervals) sched(i) = Schedule.rand.nextInt(3)}
 
   override def toString(): String = sched.mkString("[",",","]")
 }
 
-object Schedule {
+private object Schedule {
   val rand = new Random()
 }
