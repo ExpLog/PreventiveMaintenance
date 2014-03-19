@@ -1,18 +1,13 @@
 package scala.machine
 
-/**
- * Created by Leo on 19/03/14.
- */
-
 import math.exp
 import math.pow
 
-class Reliability(length: Double, sc: Schedule, sigma:Double,
+class Reliability(length: Double, val sc: Schedule, sigma:Double,
                   beta: Double, m1: Double) {
   require(m1>=0 && m1<=1)
 
-  val rel: Array[Double] = Array.fill(sc.intervals+1){1}
-
+  val rel: Array[Double] = Array.fill(sc.intervals+1){1.0}
   update()
 
   def update() {
@@ -34,6 +29,11 @@ class Reliability(length: Double, sc: Schedule, sigma:Double,
     val expoent = t/(m1*sigma)
 
     init*exp(-pow(expoent,beta))
+  }
+
+  def copy(): Reliability = {
+    val newRel: Reliability = new Reliability(length,sc.copy,sigma,beta,m1)
+    newRel
   }
 
   override def toString() = rel.mkString("[",",","]")

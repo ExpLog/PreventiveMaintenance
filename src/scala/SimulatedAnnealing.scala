@@ -1,15 +1,14 @@
 package scala
 
-/**
- * Created by Leo on 19/03/14.
- */
-
 import java.util.Random
 import math.exp
 
-abstract class SimulatedAnnealing[T](cooling: Double, initialTemp: Double,
-                                     initialSystem: T, maxTime: Double) {
-  var temp = initialTemp
+abstract class SimulatedAnnealing[T]{
+  val cooling: Double
+  var temp: Double
+  val initialSystem: T
+  val maxTime: Double
+
   val rand = new Random
 
   def run(): T = {
@@ -19,8 +18,11 @@ abstract class SimulatedAnnealing[T](cooling: Double, initialTemp: Double,
     while(System.currentTimeMillis - time <= maxTime){
       val nextSys: T = next(curSys)
       val delta = cost(nextSys) - cost(curSys)
-      if(rand.nextDouble <= exp(-delta/temp)){
-        curSys = nextSys
+
+      if(delta < 0) curSys = nextSys else {
+        if(rand.nextDouble <= exp(-delta/temp)){
+          curSys = nextSys
+        }
       }
       temp = cooling*temp
     }
