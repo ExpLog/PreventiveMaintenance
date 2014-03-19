@@ -12,11 +12,12 @@ class Schedule(val intervals: Int) {
 
   def apply(i: Int) = sched(i-1)
 
-  def randomize() {for(i <- 0 until intervals) sched(i) = Schedule.rand.nextInt(3)}
+  def randomize() {for(i <- 0 until intervals) sched(i) = rand.nextInt(3)}
+
+  def randomStep() {
+    val i = rand.nextInt(intervals+1)
+    sched(i) = rand.nextInt(3)
+  }
 
   override def toString(): String = sched.mkString("[",",","]")
-}
-
-private object Schedule {
-  val rand = new Random()
 }
