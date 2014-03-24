@@ -6,6 +6,8 @@ abstract class System {
 
   require(minRel >= 0 && minRel <= 1)
 
+  def randomStep(): Unit
   def systemRel(period: Int): Double
-  def =:(): System
+  def validSystem(): Boolean
+  def copy(): System
 }

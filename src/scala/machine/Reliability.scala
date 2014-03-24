@@ -7,6 +7,7 @@ class Reliability(length: Double, val sc: Schedule, sigma:Double,
                   beta: Double, m1: Double) {
   require(m1>=0 && m1<=1)
 
+  //this is the reliability of a machine at the beginning of an interval
   val rel: Array[Double] = Array.fill(sc.intervals+1){1.0}
   update()
 
@@ -33,6 +34,7 @@ class Reliability(length: Double, val sc: Schedule, sigma:Double,
 
   def copy(): Reliability = {
     val newRel: Reliability = new Reliability(length,sc.copy,sigma,beta,m1)
+    newRel.update()
     newRel
   }
 

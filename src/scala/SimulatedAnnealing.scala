@@ -3,25 +3,24 @@ package scala
 import java.util.Random
 import math.exp
 
-abstract class SimulatedAnnealing[T]{
+abstract class SimulatedAnnealing(maxTime: Double){
   val cooling: Double
   var temp: Double
-  val initialSystem: T
-  val maxTime: Double
+  val initialSystem: MySystem
 
   val rand = new Random
 
-  def run(): T = {
+  def run(): MySystem = {
     val time = System.currentTimeMillis
-    var curSys: T = initialSystem
+    var curSys: MySystem = initialSystem
 
     while(System.currentTimeMillis - time <= maxTime){
-      val nextSys: T = next(curSys)
+      val nextSys: MySystem = next(curSys)
       val delta = cost(nextSys) - cost(curSys)
 
       if(delta < 0) curSys = nextSys else {
         if(rand.nextDouble <= exp(-delta/temp)){
-          curSys = nextSys
+          curSys = nextSys.copy()
         }
       }
       temp = cooling*temp
@@ -29,6 +28,6 @@ abstract class SimulatedAnnealing[T]{
     curSys
   }
 
-  def next(sys: T): T
-  def cost(sys: T): Double
+  def next(sys: MySystem): MySystem
+  def cost(sys: MySystem): Double
 }

@@ -2,20 +2,17 @@ package scala
 
 import math.log
 
-class MySA extends SimulatedAnnealing[MySystem] {
+class MySA(maxTime: Double) extends SimulatedAnnealing(maxTime) {
   val cooling = 0.99
   var temp = 50000.0
   val initialSystem: MySystem = new MySystem
-  val maxTime: Double = 5*60*1000
 
   def next(sys: MySystem): MySystem = {
-    val nextSys: MySystem = sys.copy
-    val r = rand.nextInt(11)
-    nextSys.sysEle(r).sc.randomStep()
-    nextSys.sysEle(r).update()
-    if( {for(i <- 0 to 24) yield
-      nextSys.systemRel(i) >= initialSystem.minRel}.forall{ _ == true})
-      nextSys
+    val nS: MySystem = sys.copy()
+    nS.randomStep()
+
+    if(nS.validSystem())
+      nS
     else
       next(sys)
   }
