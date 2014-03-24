@@ -5,7 +5,6 @@ import java.io._
 
 object Main {
   def main(args: Array[String]){
-   // val sa = new MySA(5*60*1000)
     println("Starting Simulated Annealing")
     val writer = new PrintWriter(new File("out.txt"))
 

@@ -31,12 +31,6 @@ class MySystem extends System {
     newSys
   }
 
-  def :=(that: System) = {
-    for(i <- 0 until 11){
-      sysEle(i) = that.sysEle(i).copy
-    }
-  }
-
   def randomStep(){
     val r = rand.nextInt(11)
     val i = rand.nextInt(sysEle(r).sc.intervals)
